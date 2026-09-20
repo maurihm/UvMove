@@ -1,0 +1,325 @@
+Actividad
+10. Prueba de concepto de dos módulos
+
+Detalle
+Inicia:
+
+14/sep/2026 - 00:00 hrs
+
+Termina:
+
+19/sep/2026 - 23:45 hrs
+
+Valor:
+
+100
+
+Prerrequisitos
+
+---
+
+Descripción
+Esta es la fase donde sí escriben software.
+
+Sprint Goal: Implementar una PoC mínima que permita comprobar que dos módulos de UV Move pueden colaborar respetando sus interfaces, contratos, reglas de negocio y modelo de datos.
+
+La finalidad no es construir UV Move completo, sino materializar y validar una parte acotada del diseño desarrollado en las fases anteriores.
+
+Stack tecnológico común: Para reducir la dispersión entre equipos y mantener comparables las pruebas de concepto, todos utilizarán el siguiente stack:
+
+Capa / responsabilidad
+
+Tecnología definida
+
+Uso en la PoC
+
+Mockups
+
+Figma
+
+Referencia del prototipo navegable desarrollado previamente
+
+Modelado UML / 4+1
+
+diagrams.net
+
+Arquitectura, vistas y documentación del diseño
+
+Frontend
+
+React + Vite
+
+Interfaz web mínima necesaria para demostrar el flujo
+
+Identidad / autenticación
+
+Supabase Auth
+
+Autenticación de usuarios de la PoC
+
+Servicios auxiliares
+
+Supabase
+
+Storage o Realtime únicamente si el flujo seleccionado realmente los requiere
+
+Base de datos de negocio
+
+IBM Db2
+
+Persistencia relacional de la información de los dos módulos
+
+Desarrollo de base de datos
+
+SQL + IBM Db2
+
+Esquema, claves, restricciones, consultas, datos de prueba y evolución del modelo
+
+Control de versiones
+
+Git + GitHub
+
+Código fuente, scripts SQL, modelos y evidencia de evolución de la PoC
+
+
+
+Regla de uso tecnológico. Cada tecnología deberá cumplir una responsabilidad concreta:
+
+IBM Db2 será la fuente de persistencia de los datos de negocio.
+Supabase Auth se utilizará para identidad/autenticación.
+Supabase Storage o Realtime sólo se utilizarán cuando exista un requisito que los justifique.
+No se utilizará la base de datos de Supabase como segunda fuente de persistencia del dominio.
+Figma y diagrams.net deberán mantenerse consistentes con lo definido en las entregas anteriores.
+No se incorporarán herramientas adicionales sin una justificación relacionada con el diseño.
+
+
+Alcance de la PoC. Cada equipo implementará exactamente:
+
+2 módulos con: 1 flujo completo que atraviese ambos
+La interacción seleccionada deberá existir previamente en su diseño y estar respaldada por:
+Requisito / Regla de negocio → Responsabilidad → Módulo solicitante → Servicio/Interfaz → Contrato → Módulo proveedor
+Si los dos módulos pueden demostrarse de forma completamente independiente, la propuesta no cumple el objetivo de esta entrega.
+Qué deben implementar. La PoC deberá incluir:
+
+persistencia real en IBM Db2;
+una interfaz o servicio entre los dos módulos;
+un contrato previamente definido;
+mínimo 2 reglas de negocio ejecutables;
+autenticación mediante Supabase Auth;
+un escenario exitoso;
+un escenario rechazado o modificado por una regla de negocio;
+información persistida y recuperable desde Db2;
+trazabilidad entre requisito/regla, diseño e implementación.
+Ejemplo: Módulos: Reservaciones + Disponibilidad
+
+Escenario exitoso: Vehículo disponible → solicitar reservación → verificar disponibilidad → registrar reservación → actualizar disponibilidad.
+Escenario rechazado: Un segundo usuario intenta reservar el mismo vehículo → se verifica disponibilidad → la regla de negocio impide la operación → se informa el rechazo.
+La PoC deberá demostrar una colaboración real entre módulos, no solamente dos operaciones CRUD independientes.
+Reglas mínimas de implementación. Para el flujo seleccionado deberá ser posible identificar:
+
+Requisito / Regla de negocio -> Módulo solicitante ->Interfaz / Servicio -> Contrato -> Módulo proveedor -> Persistencia en IBM Db2 ->Resultado observable
+Durante la revisión deberán poder mostrar dónde se encuentra cada uno de estos elementos en la implementación.
+Modelo de datos y versionado:
+
+La implementación deberá partir del modelo de datos desarrollado y validado previamente.
+Si durante la construcción de la PoC necesitan modificar la base de datos:
+identifiquen qué necesidad provoca el cambio;
+indiquen el requisito o regla de negocio relacionada;
+actualicen el modelo;
+generen el nuevo script SQL;
+conserven las versiones anteriores;
+registren el cambio mediante Git.
+Regla:
+
+No se permite modificar la estructura de Db2 y sustituir silenciosamente el modelo anterior.
+Los scripts SQL utilizados deberán formar parte del repositorio GitHub.
+
+
+Escenarios obligatorios:
+
+Escenario 1 — Flujo exitoso
+
+La interacción entre los dos módulos concluye correctamente y produce el resultado previsto.
+El equipo deberá demostrar:
+entrada;
+regla(s) aplicadas;
+colaboración entre módulos;
+persistencia;
+resultado final.
+Escenario 2 — Regla de negocio
+
+La operación no puede continuar normalmente debido a una condición del dominio.
+
+El sistema deberá:
+
+detectar la condición;
+aplicar la regla de negocio;
+impedir un estado inconsistente;
+proporcionar un resultado comprensible.
+Importante
+
+No se aceptará como escenario negativo únicamente:
+
+“El usuario dejó un campo vacío.”
+
+La condición deberá corresponder a una regla de negocio real de UV Move.
+
+
+
+Qué deben poder demostrar. Durante la revisión cualquier integrante podrá ser seleccionado para explicar:
+
+Requisito: ¿Qué necesidad origina el flujo implementado?
+Regla de negocio: ¿Qué reglas condicionan su comportamiento?
+Módulos: ¿Por qué participan esos dos módulos?
+Interfaz: ¿Qué servicio requiere un módulo del otro?
+Contrato: ¿Qué información recibe, bajo qué condición y qué resultado proporciona?
+Persistencia: ¿Qué información se almacena en IBM Db2 y por qué?
+Tecnología: ¿Qué responsabilidad cumple React, Supabase y Db2 dentro de la PoC?
+Resultado: ¿Cómo demuestran que la colaboración realmente funciona?
+
+
+Qué NO implementarán
+
+No se solicita:
+
+UV Move completo;
+los 16 módulos;
+aplicación móvil;
+integración física con bicicletas o scooters;
+pagos reales;
+integración real con identidad UV;
+geolocalización real;
+sistema de producción;
+infraestructura distribuida;
+microservicios.
+Todo servicio externo que resulte necesario podrá simularse, excepto los elementos definidos expresamente como parte del stack de la PoC.
+
+El objetivo continúa siendo Diseño de Software, no desarrollar un producto comercial completo.
+
+
+
+Entregables:
+
+Cada equipo deberá entregar:
+
+código fuente correspondiente a los dos módulos;
+interfaz web mínima en React + Vite;
+flujo funcional que demuestre la colaboración entre ambos;
+autenticación mediante Supabase Auth;
+scripts SQL utilizados en IBM Db2;
+evidencia de persistencia y recuperación de datos;
+escenario exitoso;
+escenario rechazado por una regla de negocio;
+interfaz/servicio implementado;
+contrato asociado;
+repositorio GitHub con historial de cambios;
+actualización del modelo o documentación cuando la implementación haya requerido ajustes;
+trazabilidad final.
+Trazabilidad mínima
+
+Elemento
+
+Evidencia
+
+Requisito
+
+R__
+
+Regla de negocio
+
+RN__
+
+Módulo solicitante
+
+
+
+Interfaz / servicio
+
+
+
+Contrato
+
+
+
+Módulo proveedor
+
+
+
+Entidades/tablas Db2 involucradas
+
+
+
+Escenario exitoso
+
+
+
+Escenario de rechazo
+
+
+
+Resultado esperado
+
+
+
+Revisión de consistencia
+
+Antes de entregar, comprueben:
+
+Diseño ↔ Implementación
+
+¿Los módulos implementados corresponden con los previamente diseñados?
+
+UML ↔ Código
+
+¿Las dependencias principales siguen siendo las mismas?
+
+Mockup ↔ Interfaz
+
+¿La interfaz implementada conserva el flujo definido previamente?
+
+Modelo de datos ↔ Db2
+
+¿Las entidades y relaciones implementadas corresponden con el modelo aprobado?
+
+Reglas ↔ Código
+
+¿Puede localizarse dónde se aplica cada regla de negocio?
+
+Contrato ↔ Interacción
+
+¿El servicio implementado respeta entradas, condiciones y resultados definidos?
+
+
+
+Uso de IA
+
+La IA podrá utilizarse como apoyo para:
+
+comprender errores;
+consultar sintaxis;
+depurar;
+comprender bibliotecas;
+contrastar alternativas técnicas.
+No sustituye la responsabilidad del equipo sobre el diseño y la implementación.
+
+Durante la revisión cualquier integrante deberá poder explicar el código, el modelo de datos, las reglas de negocio y las decisiones tomadas.
+
+Una implementación que funcione pero que el equipo no pueda explicar o relacionar con su diseño no se considerará evidencia suficiente.
+
+
+
+Criterio de cierre
+
+La PoC no se considera terminada únicamente porque la aplicación se ejecuta.
+
+El equipo deberá demostrar:
+
+Funciona + corresponde al diseño + respeta las reglas de negocio + implementa el contrato + persiste correctamente los datos + mantiene trazabilidad + puede explicarse y justificarse.
+
+Pregunta final
+
+¿La implementación confirmó el diseño que propusimos o reveló una inconsistencia que fue necesario corregir?
+
+Documenten brevemente el principal hallazgo.
+
+Atte. Profesor Mancilla.

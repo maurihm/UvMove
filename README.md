@@ -17,18 +17,20 @@ Este repositorio contiene la Prueba de Concepto (PoC) del proyecto **UV Move**, 
 
 ### Evidencia de Persistencia (IBM Db2)
 Los datos están siendo guardados y recuperados correctamente desde una instancia real de IBM Db2.
-> **[INSERTA AQUÍ TU CAPTURA DE PANTALLA]**
-> *(Captura de terminal corriendo: `docker exec -it db2-uvmove su - db2inst1 -c "db2 connect to uvmove && db2 'SELECT * FROM Vehiculo'"`)*
+![Evidencia de Persistencia Db2](./evidencia_db2.png?v=2)
 
-### Escenario 1 - Flujo Exitoso
-Se solicita el inicio de un viaje con un vehículo en condiciones óptimas (V-001 con 85% de batería). El módulo de Inventario lo aprueba y el de Viajes guarda el registro exitosamente.
-> **[INSERTA AQUÍ TU CAPTURA DE PANTALLA]**
-> *(Captura de tu app en React mostrando el mensaje de "Éxito: Viaje iniciado..." tras presionar el botón 1)*
+### Escenario 1 - Flujo Exitoso y Protección de Estado
+Se solicita el inicio de un viaje con un vehículo en condiciones óptimas (V-001 con 85% de batería). 
+
+**Paso A (Éxito):** Al primer clic, el módulo de Inventario lo aprueba, cambia su estado a "En_Uso", y el de Viajes guarda el registro exitosamente.
+![Escenario 1 Exitoso](./escenario1_exito.png?v=2)
+
+**Paso B (Bloqueo por RN7):** Si el usuario intenta iniciar viaje nuevamente con ese mismo vehículo, el backend detecta que ya no está "Disponible" y bloquea la operación aplicando la RN7. ¡Esto demuestra que el estado persistió y las reglas protegen el sistema!
+![Escenario 1 Fallo RN7](./escenario1_fallo.png?v=2)
 
 ### Escenario 2 - Rechazo por Regla de Negocio
 Se intenta iniciar un viaje con un vehículo con baja carga (V-002 con 5% de batería). La regla de negocio detecta la condición e impide que la operación continúe.
-> **[INSERTA AQUÍ TU CAPTURA DE PANTALLA]**
-> *(Captura de tu app mostrando el mensaje de error de RN6 tras presionar el botón 2)*
+![Escenario 2 Rechazo](./escenario2.png?v=2)
 
 ---
 
